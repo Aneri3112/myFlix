@@ -125,12 +125,12 @@ app.get('/movies/genre/:genreName', (req, res) => {
 });
 
 //Return data about a director
-app.get('/movies/directors/:directorname', (req, res) => {
-    const { directorName } = req.params;
-    const director = topmovies.find(movie => movie.director === directorName ).director;
+app.get('/movies/:director', (req, res) => {
+    const { director } = req.params;
+    const movie = topmovies.find(movie => movie.director === director );
 
-    if (director) {
-        res.status(200).json(director);
+    if (movie) {
+        res.status(200).json(movie);
     } else 
         res.status(400).send('no such director')  
 });
