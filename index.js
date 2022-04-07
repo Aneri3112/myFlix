@@ -187,10 +187,8 @@ app.get('/movies/directors/:directorName', (req, res) => {
 });
 
 //Allow new users to register
-app.post('/users/register', (req, res) => {
-    res.status(201);
-    res.send('User account created');
-});
+app.post('/users', (req, res) =>{
+    req.post('Successful POST creates a new user Account');})
 
 //Allow users to update their info
 app.put('/users/:user', (req, res) => {
