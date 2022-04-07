@@ -64,7 +64,7 @@ app.get('/movies', (req, res) => {
 //Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
 app.get('/movies/:title', (req, res) => {
     const { title } = req.params;
-    const movie = topmovies.find(movie => movie.Title === title);
+    const movie = topmovies.find(movie => movie.title === title);
 
     if(movie) {
         res.status(200).json(movie);
