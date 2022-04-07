@@ -106,10 +106,10 @@ app.get('/movies/:title', (req, res) => {
 //Return data about a genre
 app.get('/movies/genre/:genreName', (req, res) => {
     const { genreName } = req.params;
-    const genre = topmovies.find(movie => movie.Genre.Name === genreName ).Genre;
+    const Genre = topmovies.find(movie => movie.genre.Name === genreName ).genre;
 
-    if (genre) {
-        res.status(200).json(genre);
+    if (Genre) {
+        res.status(200).json(Genre);
     } else
         res.status(400).send('no such genre')
 });
