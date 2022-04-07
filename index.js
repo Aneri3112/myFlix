@@ -13,70 +13,80 @@ let topmovies = [
         title: 'Life Is Beautiful(1997)',
         director: 'Roberto Benigni',
         genre:  {
-            genreName:'Drama, Comedy, War'
-        }
+            genreName:'Drama, Comedy, War',
+            description: '',
+        },
     },
     {
         title: 'Inception(2010)',
         director: 'Christopher Nolan',
         genre:  {
-            genreName:'Sci-Fi'
-        }
+            genreName:'Sci-Fi',
+            description: '',
+        },
     },
     {
         title: 'The Dark Knight(2008)',
         director: 'Christopher Nolan',
         genre:  {
-            genreName:'Action, Crime, Drama'
-        }
+            genreName:'Action, Crime, Drama',
+            description: '',
+        },
     },
     {
         title: 'Joker',
         director: 'Todd Phillips',
         genre:  {
-            genreName:'Thriller, Crime'
-        }
+            genreName:'Thriller, Crime',
+            description: '',
+        },
     },
     {
         title: '3 Idiots',
         director: 'Rajkumar Hirani',
         genre:  {
-            genreName:'Comedy, Drama'
-        }
+            genreName:'Comedy, Drama',
+            description: '',
+        },
     },
     {
         title: 'Jurassic Park',
         director: 'Steven Spielberg',
         genre:  {
-            genreName:'Sci-Fi, Adventure'
-        }
+            genreName:'Sci-Fi, Adventure',
+            description: '',
+        },
     },
     {
         title: 'The Pursuit of Happyness',
         director: 'Gabriele Muccino',
         genre:  {
-            genreName:'Biography'
-        }
+            genreName:'Biography',
+            description: '',
+        },
     },
     {
         title: 'In Time',
         director: 'Andrew Niccol',
         genre:  {
-            genreName:'Sci-Fi'
-        }
+            genreName:'Sci-Fi',
+            description: '',
+        },
     },
     {
         title: 'Gandhi',
         director: 'Richard Attenborough',
         genre:  {
-            genreName:'Biography'
-        }
+            genreName:'Biography',
+            description: '',
+        },
     },
     {
         title: 'Interstellar',
         director: 'Christopher Nolan',
         genre:  {
-            genreName:'Sci-Fi'
+            genreName:'Sci-Fi',
+            description: '',
         }
     }
 
@@ -105,7 +115,13 @@ app.get('/movies/:title', (req, res) => {
 
 //Return data about a genre
 app.get('/movies/genre/:genreName', (req, res) => {
-    res.send('Successful GET request returns genre of movie')
+    const { genreName } = req.params;
+    const Genre = topmovies.find(movie => movie.genre === genreName ).genre;
+
+    if (Genre) {
+        res.status(200).json(Genre);
+    } else
+        res.status(400).send('no such genre')
 });
 
 //Return data about a director
