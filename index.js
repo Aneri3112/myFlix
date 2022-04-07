@@ -13,7 +13,7 @@ let topmovies = [
         title: 'Life Is Beautiful(1997)',
         director: 'Roberto Benigni',
         genre:  {
-            genreName:'Drama, Comedy, War',
+            Name:'Drama, Comedy, War',
             description: '',
         },
     },
@@ -21,7 +21,7 @@ let topmovies = [
         title: 'Inception(2010)',
         director: 'Christopher Nolan',
         genre:  {
-            genreName:'Sci-Fi',
+            Name:'Sci-Fi',
             description: '',
         },
     },
@@ -29,7 +29,7 @@ let topmovies = [
         title: 'The Dark Knight(2008)',
         director: 'Christopher Nolan',
         genre:  {
-            genreName:'Action, Crime, Drama',
+            Name:'Action, Crime, Drama',
             description: '',
         },
     },
@@ -37,7 +37,7 @@ let topmovies = [
         title: 'Joker',
         director: 'Todd Phillips',
         genre:  {
-            genreName:'Thriller, Crime',
+            Name:'Thriller, Crime',
             description: '',
         },
     },
@@ -45,7 +45,7 @@ let topmovies = [
         title: '3 Idiots',
         director: 'Rajkumar Hirani',
         genre:  {
-            genreName:'Comedy, Drama',
+            Name:'Comedy, Drama',
             description: '',
         },
     },
@@ -53,7 +53,7 @@ let topmovies = [
         title: 'Jurassic Park',
         director: 'Steven Spielberg',
         genre:  {
-            genreName:'Sci-Fi, Adventure',
+            Name:'Sci-Fi, Adventure',
             description: '',
         },
     },
@@ -61,7 +61,7 @@ let topmovies = [
         title: 'The Pursuit of Happyness',
         director: 'Gabriele Muccino',
         genre:  {
-            genreName:'Biography',
+            Name:'Biography',
             description: '',
         },
     },
@@ -69,7 +69,7 @@ let topmovies = [
         title: 'In Time',
         director: 'Andrew Niccol',
         genre:  {
-            genreName:'Sci-Fi',
+            Name:'Sci-Fi',
             description: '',
         },
     },
@@ -77,7 +77,7 @@ let topmovies = [
         title: 'Gandhi',
         director: 'Richard Attenborough',
         genre:  {
-            genreName:'Biography',
+            Name:'Biography',
             description: '',
         },
     },
@@ -85,7 +85,7 @@ let topmovies = [
         title: 'Interstellar',
         director: 'Christopher Nolan',
         genre:  {
-            genreName:'Sci-Fi',
+            Name:'Sci-Fi',
             description: '',
         }
     }
