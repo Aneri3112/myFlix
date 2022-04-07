@@ -105,13 +105,7 @@ app.get('/movies/:title', (req, res) => {
 
 //Return data about a genre
 app.get('/movies/genre/:genreName', (req, res) => {
-    const { genreName } = req.params;
-    const Genre = topmovies.find(movie => movie.genre === genreName ).genre;
-
-    if (Genre) {
-        res.status(200).json(Genre);
-    } else
-        res.status(400).send('no such genre')
+    res.send('Successful GET request returns genre of movie')
 });
 
 //Return data about a director
