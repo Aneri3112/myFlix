@@ -8,8 +8,6 @@ const app = express();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: true }))
-
 let topmovies = [
     {
         title: 'Life Is Beautiful(1997)',
@@ -54,6 +52,10 @@ let topmovies = [
 
 ];
 
+app.get("/", (req, res) => {
+    res.send("Welcome to myFlix")
+})
+
 //Return a list of ALL movies to the user    
 app.get('/movies', (req, res) => {
     res.status(200).json(topmovies);
@@ -66,10 +68,10 @@ app.get('/movies/:title', (req, res) => {
 
     if(movie) {
         res.status(200).json(movie);
-    } else {
-        res.status(400).send('no such movie')
-    }
+    } else 
+        res.status(400).send('no such movie');
 });
+
 
 //Return data about a genre
 app.get('/movies/genre/genreName', (req, res) => {
@@ -89,7 +91,7 @@ app.get('/movies/directors/:directorname', (req, res) => {
 
     if (director) {
         res.status(200).json(director);
-    } else
+    } else 
     res.status(400).send('no such director')  
 });
 
