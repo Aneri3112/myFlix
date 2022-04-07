@@ -106,12 +106,12 @@ app.get('/movies/:title', (req, res) => {
 //Return data about a genre
 app.get('/movies/genre/:genreName', (req, res) => {
     const { genreName } = req.params;
-    const genre = topmovies.find(movie => movie.genreName === genreName ).genre;
+    const genre = topmovies.find(movie => movie.Genre.Name === genreName ).Genre;
 
     if (genre) {
         res.status(200).json(genre);
     } else
-    res.status(400).send('no such genre')
+        res.status(400).send('no such genre')
 });
 
 //Return data about a director
@@ -122,7 +122,7 @@ app.get('/movies/directors/:directorname', (req, res) => {
     if (director) {
         res.status(200).json(director);
     } else 
-    res.status(400).send('no such director')  
+        res.status(400).send('no such director')  
 });
 
 //Allow new users to register
