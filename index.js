@@ -11,26 +11,41 @@ app.use(bodyParser.json());
 let topmovies = [
     {
         title: 'Life Is Beautiful(1997)',
-        director: 'Roberto Benigni',
         genre:  {
             Name:'Drama, Comedy, War',
             description: '',
         },
+        director: {
+            Name: 'Roberto Benigni',
+            Bio:'',
+            Birth:'1952',
+            Death:'-',
+        },
     },
     {
         title: 'Inception(2010)',
-        director: 'Christopher Nolan',
         genre:  {
             Name:'Sci-Fi',
             description: '',
         },
+        director: {
+            Name: 'Christopher Nolan',
+            Bio:'',
+            Birth:'1970',
+            Death:'-',
+        },
     },
     {
         title: 'The Dark Knight(2008)',
-        director: 'Christopher Nolan',
         genre:  {
             Name:'Action, Crime, Drama',
             description: '',
+        },
+        director: {
+            Name: 'Christopher Nolan',
+            Bio:'',
+            Birth:'1970',
+            Death:'-',
         },
     },
     {
@@ -40,53 +55,89 @@ let topmovies = [
             Name:'Thriller, Crime',
             description: '',
         },
+        director: {
+            Name: 'Todd Phillips',
+            Bio:'',
+            Birth:'1970',
+            Death:'-',
+        },
     },
     {
         title: '3 Idiots',
-        director: 'Rajkumar Hirani',
         genre:  {
             Name:'Comedy, Drama',
             description: '',
         },
+        director: {
+            Name: 'Rajkumar Hirani',
+            Bio:'',
+            Birth:'1962',
+            Death:'-',
+        },
     },
     {
         title: 'Jurassic Park',
-        director: 'Steven Spielberg',
         genre:  {
             Name:'Sci-Fi, Adventure',
             description: '',
         },
+        director: {
+            Name: 'Steven Spielberg',
+            Bio:'',
+            Birth:'1946',
+            Death:'-',
+        },
     },
     {
         title: 'The Pursuit of Happyness',
-        director: 'Gabriele Muccino',
         genre:  {
             Name:'Biography',
             description: '',
+        },
+        director: {
+            Name: 'Gabriele Muccino',
+            Bio:'',
+            Birth:'1967',
+            Death:'-',
         },
     },
     {
         title: 'In Time',
-        director: 'Andrew Niccol',
         genre:  {
             Name:'Sci-Fi',
             description: '',
+        },
+        director: {
+            Name: 'Andrew Niccol',
+            Bio:'',
+            Birth:'1964',
+            Death:'-',
         },
     },
     {
         title: 'Gandhi',
-        director: 'Richard Attenborough',
         genre:  {
             Name:'Biography',
             description: '',
         },
+        director: {
+            Name: 'Richard Attenborough',
+            Bio:'',
+            Birth:'1923',
+            Death:'2014',
+        },
     },
     {
         title: 'Interstellar',
-        director: 'Christopher Nolan',
         genre:  {
             Name:'Sci-Fi',
             description: '',
+        },
+        director: {
+            Name: 'Christopher Nolan',
+            Bio:'',
+            Birth:'1970',
+            Death:'-',
         }
     }
 
@@ -125,12 +176,12 @@ app.get('/movies/genre/:genreName', (req, res) => {
 });
 
 //Return data about a director
-app.get('/movies/:director', (req, res) => {
-    const { director } = req.params;
-    const movie = topmovies.find(movie => movie.director === director );
+app.get('/movies/directors/:directorname', (req, res) => {
+    const { directorName } = req.params;
+    const Director = topmovies.find(movie => movie.director.Name === directorName ).director;
 
-    if (movie) {
-        res.status(200).json(movie);
+    if (Director) {
+        res.status(200).json(Director);
     } else 
         res.status(400).send('no such director')  
 });
