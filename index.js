@@ -11,43 +11,73 @@ app.use(bodyParser.json());
 let topmovies = [
     {
         title: 'Life Is Beautiful(1997)',
-        director: 'Roberto Benigni'
+        director: 'Roberto Benigni',
+        genre:  {
+            genreName:'Drama, Comedy, War'
+        }
     },
     {
         title: 'Inception(2010)',
-        director: 'Christopher Nolan'
+        director: 'Christopher Nolan',
+        genre:  {
+            genreName:'Sci-Fi'
+        }
     },
     {
         title: 'The Dark Knight(2008)',
-        director: 'Christopher Nolan'
+        director: 'Christopher Nolan',
+        genre:  {
+            genreName:'Action, Crime, Drama'
+        }
     },
     {
         title: 'Joker',
-        director: 'Todd Phillips'
+        director: 'Todd Phillips',
+        genre:  {
+            genreName:'Thriller, Crime'
+        }
     },
     {
         title: '3 Idiots',
-        director: 'Rajkumar Hirani'
+        director: 'Rajkumar Hirani',
+        genre:  {
+            genreName:'Comedy, Drama'
+        }
     },
     {
         title: 'Jurassic Park',
-        director: 'Steven Spielberg'
+        director: 'Steven Spielberg',
+        genre:  {
+            genreName:'Sci-Fi, Adventure'
+        }
     },
     {
         title: 'The Pursuit of Happyness',
-        director: 'Gabriele Muccino'
+        director: 'Gabriele Muccino',
+        genre:  {
+            genreName:'Biography'
+        }
     },
     {
         title: 'In Time',
-        director: 'Andrew Niccol'
+        director: 'Andrew Niccol',
+        genre:  {
+            genreName:'Sci-Fi'
+        }
     },
     {
         title: 'Gandhi',
-        director: 'Richard Attenborough'
+        director: 'Richard Attenborough',
+        genre:  {
+            genreName:'Biography'
+        }
     },
     {
         title: 'Interstellar',
-        director: 'Christopher Nolan'
+        director: 'Christopher Nolan',
+        genre:  {
+            genreName:'Sci-Fi'
+        }
     }
 
 ];
