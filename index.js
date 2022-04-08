@@ -12,12 +12,17 @@ let users = [
     {
         id: 1,
         name: "Anna",
-        favouriteMovies: []
+        favouriteMovies: ["Gandhi"]
     },
     {
         id: 2,
         name: "Frank",
         favouriteMovies: ["Joker"]
+    },
+    {
+        id: 3,
+        name: "Robert",
+        favouriteMovies: []
     }
 ]
 
@@ -190,7 +195,33 @@ app.post('/users/:id/:movietitle', (req, res) => {
 
     if (user) {
         user.favouriteMovies.push(movietitle);
-        res.status(200).send(`${movieName} has been added to user ${id}'s array`);
+        res.status(200).json(user);
+    } else 
+        res.status(400).send('no such user')
+})
+
+//DELETE
+app.delete('/users/:id/:movietitle', (req, res) => {
+    const { id, movietitle } = req.params;
+
+    let user = users.find( user => user.id == id);
+
+    if (user) {
+        user.favouriteMovies = user.favouriteMovies.filter( title => title !== movietitle);
+        res.status(200).send(`${movietitle} has been removed from user ${id}'s array`);
+    } else 
+        res.status(400).send('no such user')
+})
+
+//DELETE
+app.delete('/users/:id', (req, res) => {
+    const { id } = req.params;
+
+    let user = users.find( user => user.id == id);
+
+    if (user) {
+        users = users.filter( user => user.id != id);
+        res.status(200).send(`user ${id} has been deleted`);
     } else 
         res.status(400).send('no such user')
 })
