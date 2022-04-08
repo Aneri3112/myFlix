@@ -8,6 +8,19 @@ const app = express();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
+let users = [
+    {
+        id: 1,
+        name: "Anna",
+        favouriteMovies: []
+    },
+    {
+        id: 2,
+        name: "Frank",
+        favouriteMovies: ["Joker"]
+    }
+]
+
 let topmovies = [
     {
         title: 'Life Is Beautiful(1997)',
@@ -143,6 +156,19 @@ let topmovies = [
 
 ];
 
+//CREATE
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+
+    if (newUser.name) {
+        newUser.id = uuid.v4();
+        users.push(newUser);
+        res.status(201).json(newUser)
+    } else 
+        res.status(400).send('users need name')
+})
+
+//Read
 app.get("/", (req, res) => {
     res.send("Welcome to myFlix")
 })
@@ -186,30 +212,6 @@ app.get('/movies/directors/:directorName', (req, res) => {
         res.status(400).send('no such director')  
 });
 
-//Allow new users to register
-app.post('/users', (req, res) =>{
-    req.post('Successful POST creates a new user Account');})
-
-//Allow users to update their info
-app.put('/users/:user', (req, res) => {
-    res.send('User account updated');
-});
-
-//Allow users to add a movie to their favorites
-app.post('/users/:user/favourites', (req, res) => {
-    res.status(201);
-    res.send('The movie has been add to favorites');
-});
-
-//Allow users to remove a movie from their favorites 
-app.delete('/users/:user/favourites', (req, res) => {
-    res.send('The movie has been removed from favorites');
-});
-
-//Allow existing users to deregister
-app.delete('/users/:user', (req, res) => {
-    res.send('You have been removed')
-});
 
 
 //Static File  
