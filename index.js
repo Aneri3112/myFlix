@@ -161,6 +161,10 @@ let topmovies = [
 
 ];
 
+//READ
+app.get('/users', (req, res) => {
+    res.status(200).json(users);
+});
 //CREATE
 app.post('/users', (req, res) => {
     const newUser = req.body;
@@ -188,27 +192,27 @@ app.put('/users/:id', (req, res) => {
 })
 
 //CREATE
-app.post('/users/:id/:movietitle', (req, res) => {
-    const { id, movietitle } = req.params;
+app.patch('/users/:id/:favourites', (req, res) => {
+    const { id, favourites } = req.params;
 
     let user = users.find( user => user.id == id);
 
     if (user) {
-        user.favouriteMovies.push(movietitle);
+        user.favouriteMovies.push(favourites);
         res.status(200).json(user);
     } else 
         res.status(400).send('no such user')
 })
 
 //DELETE
-app.delete('/users/:id/:movietitle', (req, res) => {
-    const { id, movietitle } = req.params;
+app.delete('/users/:id/:favourites', (req, res) => {
+    const { id, favourites } = req.params;
 
     let user = users.find( user => user.id == id);
 
     if (user) {
-        user.favouriteMovies = user.favouriteMovies.filter( title => title !== movietitle);
-        res.status(200).send(`${movietitle} has been removed from user ${id}'s array`);
+        user.favouriteMovies = user.favouriteMovies.filter( title => title !== favourites);
+        res.status(200).send(`${favourites} has been removed from user ${id}'s array`);
     } else 
         res.status(400).send('no such user')
 })
