@@ -192,27 +192,27 @@ app.put('/users/:id', (req, res) => {
 })
 
 //CREATE
-app.patch('/users/:id/:favourites', (req, res) => {
-    const { id, favourites } = req.params;
+app.patch('/users/:userid/favourites/:movieid', (req, res) => {
+    const { userid, movieid } = req.params;
 
-    let user = users.find( user => user.id == id);
+    let user = users.find( user => user.id == userid);
 
     if (user) {
-        user.favouriteMovies.push(favourites);
+        user.favouriteMovies.push(movieid);
         res.status(200).json(user);
     } else 
         res.status(400).send('no such user')
 })
 
 //DELETE
-app.delete('/users/:id/:favourites', (req, res) => {
-    const { id, favourites } = req.params;
+app.delete('/users/:userid/favourites/:movieid', (req, res) => {
+    const { userid, movieid } = req.params;
 
-    let user = users.find( user => user.id == id);
+    let user = users.find( user => user.id == userid);
 
     if (user) {
-        user.favouriteMovies = user.favouriteMovies.filter( title => title !== favourites);
-        res.status(200).send(`${favourites} has been removed from user ${id}'s array`);
+        user.favouriteMovies = user.favouriteMovies.filter( title => title !== movieid);
+        res.status(200).send(`${movieid} has been removed from user ${userid}'s array`);
     } else 
         res.status(400).send('no such user')
 })
@@ -264,9 +264,9 @@ app.get('/movies/genre/:genreName', (req, res) => {
 });
 
 //Return data about a director
-app.get('/movies/directors/:directorName', (req, res) => {
-    const { directorName } = req.params;
-    const Director = topmovies.find(movie => movie.director.Name === directorName ).director;
+app.get('/movies/directors/:name', (req, res) => {
+    const { name } = req.params;
+    const Director = topmovies.find(movie => movie.director.Name === name ).director;
 
     if (Director) {
         res.status(200).json(Director);

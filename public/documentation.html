@@ -84,7 +84,7 @@
 
         <tr>
             <td>Return data about a director (bio, birth year, death year) by name</td>
-            <td>/movies/directors/[directorName]</td>
+            <td>/movies/directors/[name]</td>
             <td>GET</td>
             <td>:directorName</td>
             <td>None</td>
@@ -202,7 +202,7 @@
 
         <tr>
             <td>Allow users to add a movie to their list of favorites</td>
-            <td>/users/[id]/[favourites]</td>
+            <td>/users/[userid]/favourites/[movieid]</td>
             <td>PATCH</td>
             <td>:id, :favourites</td>
             <td>None</td>
@@ -211,7 +211,7 @@
 
         <tr>
             <td>Allow users to remove a movie from their list of favorites</td>
-            <td>/users/[id]/[favourites]</td>
+            <td>/users/[userid]/favourites/[movieid]</td>
             <td>DELETE</td>
             <td>:id, :favourites</td>
             <td>None</td>
