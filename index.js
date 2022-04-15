@@ -181,23 +181,11 @@ let topmovies = [
 
 ];
 
-app.get('/users', (req, res) => {
-    Users.find()
-    .then((user) => {
-        res.status(201).json(user);
-    })
-    .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-    }); 
-});
-
-
 //CREATE
 app.post('/users', (req, res) =>{
     Users.findOne({ Username: req.body.Username })
-      .then((User) => {
-        if(User){
+      .then((users) => {
+        if(users){
   
         return res.status(400).send(req.body.Username + "  has been created ! ");
   
@@ -208,8 +196,8 @@ app.post('/users', (req, res) =>{
             Email: req.body.Email,
             Birthday: req.body.Birthday,
           })
-            .then((User) => {
-            res.status(201).json(User);
+            .then((users) => {
+            res.status(201).json(users);
             })
             .catch((err) => {
                 console.error(err);
@@ -251,12 +239,12 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
         $push: { FavouriteMovies: req.params.MovieID }
     },
     { new: true }, // This line makes sure that the updated document is returned
-    (err, updatedUser) => {
+    (err, updatedusers) => {
         if (err) {
             console.error(err);
             res.status(500).send('Error: ' + err);
         } else {
-            res.json(updatedUser);
+            res.json(updatedusers);
         }
     });
 });
@@ -267,12 +255,12 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
     {  $pull: { FavouriteMovies: req.params.MovieID }
     },
     { new: true }, // This line makes sure that the updated document is returned
-    (err, updatedUser) => {
+    (err, updatedusers) => {
         if (err) {
             console.error(err);
             res.status(500).send('Error: ' + err);
         } else {
-            res.json(updatedUser);
+            res.json(updatedusers);
         }
     });
 });
@@ -280,8 +268,8 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
 //DELETE
 app.delete('/users/:Username', (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
-    .then((user) => {
-        if (!user) {
+    .then((users) => {
+        if (!users) {
           res.status(400).send(req.params.Username + ' was not found');
         } else {
           res.status(200).send(req.params.Username + ' was deleted.');
