@@ -6,7 +6,7 @@ const express = require('express'),
 const mongoose = require('mongoose');
 const Models = require('./model.js'); 
 
-const Movies = Models.Movie;
+const movies = Models.Movie;
 const Users = Models.User;
 
 const app = express();
@@ -14,7 +14,7 @@ const app = express();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/[myFlixDB]', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 let topmovies = [
@@ -181,6 +181,17 @@ let topmovies = [
 
 ];
 
+app.get('/users', (req, res) => {
+    Users.find()
+    .then((user) => {
+        res.status(201).json(user);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+    }); 
+});
+
 
 //CREATE
 app.post('/users', (req, res) =>{
@@ -191,8 +202,7 @@ app.post('/users', (req, res) =>{
         return res.status(400).send(req.body.Username + "  has been created ! ");
   
         } else {
-          Users
-            .create({
+          Users.create({
             Username: req.body.Username,
             Password: req.body.Password,
             Email: req.body.Email,
@@ -238,7 +248,7 @@ app.put ('/users/:Username', (req, res) =>{
 //CREATE
 app.post('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, {
-        $push: { FavoriteMovies: req.params.MovieID }
+        $push: { FavouriteMovies: req.params.MovieID }
     },
     { new: true }, // This line makes sure that the updated document is returned
     (err, updatedUser) => {
@@ -254,7 +264,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 //DELETE
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username }, 
-    {  $pull: { FavoriteMovies: req.params.MovieID }
+    {  $pull: { FavouriteMovies: req.params.MovieID }
     },
     { new: true }, // This line makes sure that the updated document is returned
     (err, updatedUser) => {
@@ -290,7 +300,7 @@ app.get("/", (req, res) => {
 
 //Return a list of ALL movies to the user    
 app.get('/movies', (req, res) => {
-    Movies.find()
+    movies.find()
     .then((movies) => {
         res.status(201).json(movies);
     })
@@ -301,8 +311,8 @@ app.get('/movies', (req, res) => {
 });
 
 //Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
-app.get('/movies/:title', (req, res) => {
-    Movies.findOne({ Title: req.params.title })
+app.get('/movies/:Title', (req, res) => {
+    movies.findOne({ title: req.params.Title })
     .then((movies) => {
       res.json(movies);
     })
@@ -315,10 +325,10 @@ app.get('/movies/:title', (req, res) => {
 
 //Return data about a genre
 app.get('/movies/genre/:Name', (req, res) => {
-    Movies.findOne({ 'Genre.Name': req.params.Name}) 
+    movies.findOne({ 'Genre.Name': req.params.Name}) 
     .then((movies) => {
         if(movies){ 
-            res.status(200).json(movies.Genre);
+            res.status(200).json(movies.genre);
         } else {
             res.status(400).send('Genre not found');
         };
@@ -329,11 +339,11 @@ app.get('/movies/genre/:Name', (req, res) => {
 });
 
 //Return data about a director
-app.get('/movies/directors/:Name', (req, res) => {
-    Movies.findOne({ 'Director.Name': req.params.Name}) 
+app.get('/movies/director/:Name', (req, res) => {
+    movies.findOne({ 'director.Name': req.params.Name}) 
     .then((movies) => {
         if(movies) { 
-            res.status(200).json(movies.Director);
+            res.status(200).json(movies.director);
         }else {
             res.status(400).send('Director not found');
         };
