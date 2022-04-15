@@ -57,7 +57,8 @@
                                 Death: '',
                                 Bio: ''
                             },
-                            ImagePath: 
+                            ImagePath: '',
+                            Featured: ''
                         }    
                     </code> 
                 </pre>    
@@ -68,7 +69,7 @@
             <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
             <td>/movies/genre/[Name]</td>
             <td>GET</td>
-            <td>:genreName</td>
+            <td>:Name</td>
             <td>None</td>
             <td>A JSON object holding data about the selected genre. Example:
                 <pre>    
@@ -84,9 +85,9 @@
 
         <tr>
             <td>Return data about a director (bio, birth year, death year) by name</td>
-            <td>/movies/directors/[name]</td>
+            <td>/movies/director/[name]</td>
             <td>GET</td>
-            <td>:directorName</td>
+            <td>:Name</td>
             <td>None</td>
             <td>A JSON object holding data about the selected director. Example: <br>
                 <pre>
@@ -99,34 +100,6 @@
                         }
                     </code> 
                 </pre>    
-            </td>
-        </tr>
-
-        <tr>
-            <td>Get a list of all users</td>
-            <td>/users</td>
-            <td>GET</td>
-            <td>None</td>
-            <td>None</td>
-            <td>A JSON object holding data about all users, structured like:<br>
-                <pre>
-                    <code>
-                        "_id": "hdsg5665fvv66",
-                        "Username": "Adar Jain",
-                        "Password": "Jainar695",
-                        "Email": "adarjain12k@yahoo.com",
-                        "Birthday": "1985-04-08T00:00:00.000Z",
-                        "FavoriteMovies": []
-                    </code>
-                    <code>
-                        "_id": "hdbkjdjkndj25",
-                        "Username": "Libia Rose",
-                        "Password": "Rose158lib",
-                        "Email": "libiarose@yahoo.com",
-                        "Birthday": "1997-08-10T00:00:00.000Z",
-                        "FavoriteMovies": []
-                    </code>
-                </pre>
             </td>
         </tr>
 
@@ -170,9 +143,9 @@
 
         <tr>
             <td>Allow users to update their user info (username)</td>
-            <td>/users/[id]</td>
+            <td>/users/[Username]</td>
             <td>PUT</td>
-            <td>:id</td>
+            <td>:Username</td>
             <td> A JSON object holding the new username. Example:
                 <pre>
                     <code>
@@ -202,27 +175,27 @@
 
         <tr>
             <td>Allow users to add a movie to their list of favorites</td>
-            <td>/users/[userid]/favourites/[movieid]</td>
-            <td>PATCH</td>
-            <td>:id, :favourites</td>
+            <td>/users/[Usernaname]/movies/[Movieid]</td>
+            <td>POST</td>
+            <td>:Username, :Movieid</td>
             <td>None</td>
             <td>A text message indicating the movie was added</td>
         </tr>
 
         <tr>
             <td>Allow users to remove a movie from their list of favorites</td>
-            <td>/users/[userid]/favourites/[movieid]</td>
+            <td>/users/[Usernaname]/movies/[Movieid]</td>
             <td>DELETE</td>
-            <td>:id, :favourites</td>
+            <td>:Username, :Movieid</td>
             <td>None</td>
             <td>A text message indicating the movie was deleted</td>
         </tr>
 
         <tr>
             <td>Allow existing users to deregister</td>
-            <td>/users/[id]</td>
+            <td>/users/[Username]</td>
             <td>DELETE</td>
-            <td>:id</td>
+            <td>:Username</td>
             <td>None</td>
             <td>A message indicating the user was deregistered</td>
         </tr>
