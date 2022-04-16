@@ -14,7 +14,7 @@ const app = express();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/[myFlixDB]', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 //CREATE
@@ -136,7 +136,7 @@ app.get('/movies', (req, res) => {
 
 //Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
 app.get('/movies/:Title', (req, res) => {
-    Movies.findOne({ title: req.params.Title })
+    Movies.findOne({ Title: req.params.Title })
     .then((movies) => {
       res.json(movies);
     })
@@ -164,7 +164,7 @@ app.get('/movies/genre/:Name', (req, res) => {
 
 //Return data about a director
 app.get('/movies/director/:Name', (req, res) => {
-    Movies.findOne({ 'director.Name': req.params.Name}) 
+    Movies.findOne({ 'Director.Name': req.params.Name}) 
     .then((movies) => {
         if(movies) { 
             res.status(200).json(movies.director);
