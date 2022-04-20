@@ -17,7 +17,6 @@ const morgan = require('morgan'),
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 //CORS to limit origins for application
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
