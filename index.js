@@ -1,28 +1,40 @@
 const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-uuid = require('uuid');  
+const app = express(); 
 
 const mongoose = require('mongoose');
-//const { Passport } = require('passport/lib');
 const Models = require('./model.js'); 
+const cors = require('cors');
+const Movies = Models.Movie;
+const Users = Models.User;
+ 
+mongoose.connect('mongodb://localhost:27017/[myFlixDB]', { useNewUrlParser: true, useUnifiedTopology: true });
 
-const app = express(); 
+
+const morgan = require('morgan'),
+   bodyParser = require('body-parser'),
+   uuid = require('uuid'); 
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+
+//CORS to limit origins for application
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+app.use(cors({
+	origin: (origin, callback) => {
+		if(!origin) return callback(null, true);
+		if(allowedOrigins.indexOf(origin) === -1){
+			let message = 'The CORS policy for this application does not allow access from origin ' + origin;
+			return callback(new Error(message), false);
+		}
+		return callback(null, true);
+	}
+}));
 
 let auth = require('./auth')(app);
 const passport = require('passport');
     require('./passport');
-     
-
-const Movies = Models.Movie;
-const Users = Models.User;
-
-mongoose.connect('mongodb://localhost:27017/[myFlixDB]', { useNewUrlParser: true, useUnifiedTopology: true });
-
 
 //CREATE
 app.post('/users', passport.authenticate('jwt', { session: false}), (req, res) =>{
