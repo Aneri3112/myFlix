@@ -36,7 +36,7 @@ const passport = require('passport');
     require('./passport');
 
 //CREATE
-app.post('/users', passport.authenticate('jwt', { session: false}), (req, res) =>{
+app.post('/users', (req, res) =>{
     Users.findOne({ Username: req.body.Username })
       .then((users) => {
         if(users){
