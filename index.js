@@ -41,20 +41,21 @@ let auth = require('./auth')(app);
 const passport = require('passport');
     require('./passport');
 
+app.use(express.static("public"));
+
 
  //CREATE
 app.post('/users',
 [
-  check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Username', 'Username is required').isLength({ min: 5 }),
+  check(
+    'Username', 
+    'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
 ],
 (req, res) =>{
-
-  //Check the validation object for errors
   let errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     return res.status(422).json({errors: errors.array() });
   }
@@ -63,9 +64,7 @@ app.post('/users',
     Users.findOne({ Username: req.body.Username })
       .then((users) => {
         if(users){
-  
-        return res.status(400).send(req.body.Username + "  has been created ! ");
-  
+            return res.status(400).send(req.body.Username + "  Already Exists! ");
         } else {
           Users.create({
             Username: req.body.Username,
