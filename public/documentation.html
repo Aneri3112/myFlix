@@ -66,7 +66,7 @@
          </tr>
 
         <tr>
-            <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
+            <td>Return data about a genre (Name, Description(e.g., “Thriller”) by Name</td>
             <td>/movies/genre/[Name]</td>
             <td>GET</td>
             <td>:Name</td>
@@ -76,7 +76,7 @@
                     <code>
                         {
                             Name: 'Thriller', 
-                            Description: ''
+                            Description: 'In Thriller movies there is Action...'
                         }
                     </code> 
                 </pre>    
@@ -84,7 +84,7 @@
         </tr>
 
         <tr>
-            <td>Return data about a director (bio, birth year, death year) by name</td>
+            <td>Return data about a director (Name, Bio, Birth, Death) by Name</td>
             <td>/movies/director/[Name]</td>
             <td>GET</td>
             <td>:Name</td>
@@ -94,7 +94,7 @@
                     <code>
                         {
                             Name: 'Rajkumar Hirani',
-                            Bio: ''
+                            Bio: 'RajKumar Hirani is born in India...'
                             Birth: '1962', 
                             Death: '-',
                         }
@@ -112,13 +112,11 @@
                 <pre>
                     <code>
                         { 
-                            "Username": "anna", 
-                            "Email": "anna.roy@gmail.com", 
-                            "Password": "anna#2020!"
-                            "Birthday": "12/12/1994", 
-                            "FavouriteMovies": [
-                            "Interstellar", "3 Idiots"
-                            ] 
+                            "Username": " ",
+                            "Email": " ",
+                            "Password": " ",
+                            "Birthday": " ", 
+                            "FavouriteMovies": []
                         }
                     </code>
                 </pre>
@@ -128,19 +126,58 @@
                     <code>
                         { 
                             id: '1',
-                            "Username": "anna", 
-                            "Email": "anna.roy@gmail.com", 
-                            "Password": "anna#2020"
-                            "Birthday": "12/12/1994", 
-                            "FavouriteMovies": [
-                            "Interstellar", "3 Idiots"
-                            ] 
+                            "Username": " ", 
+                            "Email": " ", 
+                            "Password": " ",
+                            "Birthday": " ", 
+                            "FavouriteMovies": [] 
                         }
                     </code>
                 </pre>
             </td>
         </tr>
-
+        <tr>
+            <td>Allow registered users to login to application.</td>
+            <td>/login</td>
+            <td>POST</td>
+            <td>:Username, :Password</td>
+            <td>NONE</td>
+            <td>A JSON object containing information about the user and a JWT token.</td>
+        </tr>
+        <tr>
+            <td>Allow useres to update their user info (username).</td>
+            <td>/users/:Username</td>
+            <td>PUT</td>
+            <td>:Username</td>
+            <td>A JSON object containing new username. Example:
+                <pre>
+                    <code>
+                        {
+                            Username: '',
+                            Email: '',
+                            Password: '',
+                            Birthday: '',
+                            Favorites: [],
+                            ID: ''
+                        }
+                    </code>
+                </pre>
+            </td>
+            <td>A JSON object containing the updated user profile. Example:
+                <pre>
+                    <code>
+                        {
+                            Username: '',
+                            Email: '',
+                            Password: '',
+                            Birthday: '',
+                            FavoritesMovies: [],
+                            ID: ''
+                        }
+                    </code>
+                </pre>
+            </td>
+        </tr>
         <tr>
             <td>Allow users to update their user info (username)</td>
             <td>/users/[Username]</td>
@@ -179,7 +216,7 @@
             <td>PATCH</td>
             <td>:Username, :Movieid</td>
             <td>None</td>
-            <td>A text message indicating the movie was added</td>
+            <td>A message indicating the movie was added</td>
         </tr>
 
         <tr>
@@ -188,7 +225,7 @@
             <td>DELETE</td>
             <td>:Username, :Movieid</td>
             <td>None</td>
-            <td>A text message indicating the movie was deleted</td>
+            <td>A message indicating the movie was deleted</td>
         </tr>
 
         <tr>
@@ -197,7 +234,7 @@
             <td>DELETE</td>
             <td>:Username</td>
             <td>None</td>
-            <td>A message indicating the user was deregistered</td>
+            <td>A message indicating the user was deleted</td>
         </tr>
     </tbody>
   </table>
