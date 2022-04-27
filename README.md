@@ -40,4 +40,4 @@ This application is developed for a Full-Stack Web Development Course at CareerF
 
 ## Documentation Links
 
-- Feel free to check [Documentation Page](./documentation.html)
+- Feel free to check [Documentation Page](./public/documentation.html)
