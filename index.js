@@ -102,7 +102,6 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 
 //UPDATE
 app.put ('/users/:Username',
-ensureSameUser,
 passport.authenticate('jwt', { session: false}), (req, res) =>{
     Users.findOneAndUpdate({ User: req.params.Username }, { 
       $set:
