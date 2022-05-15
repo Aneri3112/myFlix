@@ -102,22 +102,8 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 
 //UPDATE
 app.put ('/users/:Username',
-[
-  check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()
-],
+ensureSameUser,
 passport.authenticate('jwt', { session: false}), (req, res) =>{
-
-   //Check the validation object for errors
-   let errors = validationResult(req);
-
-   if (!errors.isEmpty()) {
-     return res.status(422).json({errors: errors.array() });
-   }
-
-   let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ User: req.params.Username }, { 
       $set:
         {
@@ -127,15 +113,18 @@ passport.authenticate('jwt', { session: false}), (req, res) =>{
           Birthday: req.body.Birthday,
         }
       },
-      { new:true }) 
-      .then((updatedUser) => {
-        res.json(updatedUser);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error ' + err);
-      });
-});
+      { new: true },
+      (err, updatedusers) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Error; " + err);
+        } else {
+          res.json(updatedusers);
+        }
+      }
+    );
+  }
+);
 
 //CREATE
 app.patch('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false}), (req, res) => {
