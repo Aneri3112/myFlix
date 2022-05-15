@@ -9,7 +9,7 @@ const Users = Models.User;
 const port = process.env.PORT || 8080;
 
 const { check, validationResult } = require('express-validator');
-const { authProvider, ensureSameUser } = require("./auth");
+const { ensureSameUser } = require("./auth");
  
 // mongoose.connect('mongodb://localhost:27017/[myFlixDB]', { useNewUrlParser: true, useUnifiedTopology: true });
 
