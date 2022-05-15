@@ -9,6 +9,7 @@ const Users = Models.User;
 const port = process.env.PORT || 8080;
 
 const { check, validationResult } = require('express-validator');
+const { authProvider, ensureSameUser } = require("./auth");
  
 // mongoose.connect('mongodb://localhost:27017/[myFlixDB]', { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -22,10 +23,10 @@ const morgan = require('morgan'),
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+//app.use(cors());
 
 //CORS to limit origins for application
-/*let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com','http://localhost:1234'];
 app.use(cors({
 	origin: (origin, callback) => {
 		if(!origin) return callback(null, true);
@@ -35,7 +36,7 @@ app.use(cors({
 		}
 		return callback(null, true);
 	}
-})); */
+})); 
 
 let auth = require('./auth')(app);
 const passport = require('passport');
@@ -102,26 +103,33 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 
 //UPDATE
 app.put ('/users/:Username',
+ensureSameUser,
 passport.authenticate('jwt', { session: false}), (req, res) =>{
-    Users.findOneAndUpdate({ User: req.params.Username }, { 
-      $set:
+  const updatedusers = {
+    Username: req.body.Username,
+    Email: req.body.Email,
+    Birthday: req.body.Birthday,
+  }
+  if (req.body.Password) {
+    updatedusers.password = Users.hashPassword(req.body.password);
+  }
+    Users.findOneAndUpdate({ Username: req.params.Username }, 
         {
-          Username: req.body.Username,
-          Password: hashedPassword,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday,
+          $set: updatedusers,
+        },
+        {
+          new: true
         }
-      },
-      { new: true },
-      (err, updatedusers) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Error; " + err);
-        } else {
-          res.json(updatedusers);
-        }
-      }
-    );
+    )
+      .then((updatedusers) => {
+        const noPassword = updatedusers;
+        delete noPassword.Password;
+        res.json(noPassword); // Return json object of updatedUser
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
   }
 );
 
