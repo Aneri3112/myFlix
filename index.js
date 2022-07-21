@@ -22,10 +22,10 @@ const morgan = require('morgan'),
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(cors());
+app.use(cors());
 
 //CORS to limit origins for application
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myflixspecial.netlify.app', 'http://localhost:1234'];
+/*let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myflixspecial.netlify.app', 'http://localhost:1234'];
 app.use(cors({
 	origin: (origin, callback) => {
 		if(!origin) return callback(null, true);
@@ -35,7 +35,7 @@ app.use(cors({
 		}
 		return callback(null, true);
 	}
-})); 
+})); */
 
 let auth = require('./auth')(app);
 const passport = require('passport');
