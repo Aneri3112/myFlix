@@ -23,10 +23,10 @@ const morgan = require('morgan'),
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(cors({ origin: '*' }));
+app.use(cors());
 
 //CORS to limit origins for application
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myflixspecial.netlify.app', 'http://localhost:1234', 'http://localhost:4200'];
+/*let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myflixspecial.netlify.app', 'http://localhost:1234', 'http://localhost:4200'];
 app.use(cors({
 	origin: (origin, callback) => {
 		if(!origin) return callback(null, true);
@@ -36,7 +36,7 @@ app.use(cors({
 		}
 		return callback(null, true);
 	}
-})); 
+})); */
 
 let auth = require('./auth')(app);
 const passport = require('passport');
@@ -86,6 +86,17 @@ app.post('/users',
         console.error(err);
         res.status(500).send('Error ' + err);
       });
+});
+
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
  
 // gets a user by username
