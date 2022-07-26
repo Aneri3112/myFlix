@@ -204,7 +204,7 @@ app.get("/", (req, res) => {
 })
 
 //Return a list of ALL movies to the user    
-app.get('/movies', passport.authenticate('jwt', { session: false}), (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false}), (_req, res) => {
     Movies.find()
     .then((movies) => {
         res.status(201).json(movies);
@@ -264,7 +264,7 @@ app.get('/movies/director/:Name', passport.authenticate('jwt', { session: false}
 app.use(express.static('public')); 
 
 //Error Handling
-app.use((err, req, res, next) => {
+app.use((err, _req, res, next) => {
   console.error(err.stack); 
   res.status(500).send('Something broke!');
 });
