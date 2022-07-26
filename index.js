@@ -23,7 +23,9 @@ const morgan = require('morgan'),
 app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 
 //CORS to limit origins for application
 /*let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://myflixspecial.netlify.app', 'http://localhost:1234', 'http://localhost:4200'];
