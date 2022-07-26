@@ -6,7 +6,7 @@ const Models = require('./model.js');
 const cors = require('cors');
 const Movies = Models.Movie;
 const Users = Models.User;
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 
 const { check, validationResult } = require('express-validator');
  
@@ -90,7 +90,7 @@ app.post('/users',
       });
 });
 
-app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }), (_req, res) => {
   Users.find()
     .then((users) => {
       res.status(200).json(users);
@@ -118,7 +118,7 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 app.put ('/users/:Username', passport.authenticate('jwt', { session: false}),
 [
   check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
 ],
  (req, res) =>{
 
