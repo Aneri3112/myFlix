@@ -6,7 +6,6 @@ const Models = require('./model.js');
 const cors = require('cors');
 const Movies = Models.Movie;
 const Users = Models.User;
-const port = process.env.PORT || 8000;
 
 const { check, validationResult } = require('express-validator');
  
@@ -93,7 +92,7 @@ app.post('/users',
 app.get('/users', passport.authenticate('jwt', { session: false }), (_req, res) => {
   Users.find()
     .then((users) => {
-      res.status(200).json(users);
+      res.status(201).json(users);
     })
     .catch((err) => {
       console.error(err);
@@ -130,7 +129,7 @@ app.put ('/users/:Username', passport.authenticate('jwt', { session: false}),
      return res.status(422).json({errors: errors.array() });
    }
    if(req.body.hasOwnProperty('Password')){
-   let hashedPassword = Users.hashPassword(req.body.Password);
+    hashedPassword = Users.hashPassword(req.body.Password);
    }
     Users.findOneAndUpdate({ Username: req.params.Username }, { 
       $set:
@@ -270,6 +269,7 @@ app.use((err, _req, res, next) => {
 });
 
 //Listen for request
+const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () =>{
     console.log('Listening on Port ' + port);
 });
