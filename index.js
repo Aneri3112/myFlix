@@ -89,10 +89,10 @@ app.post('/users',
       });
 });
 
-app.get('/users', passport.authenticate('jwt', { session: false }), (_req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find()
     .then((users) => {
-      res.status(201).json(users);
+      res.status(200).json(users);
     })
     .catch((err) => {
       console.error(err);
@@ -104,8 +104,12 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (_req, res) 
 
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOne({ Username: req.params.Username })
-    .then((users) => {
-      res.json(users);
+    .then((user) => {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(400).send('User with the username ' + req.params.Username + 'was not found');
+      };    
     })
     .catch((err) => {
       console.error(err);
@@ -154,14 +158,13 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
     Users.findOneAndUpdate({ Username: req.params.Username }, {
         $push: { FavouriteMovies: req.params.MovieID }
     },
-    { new: true }, // This line makes sure that the updated document is returned
-    (err, updatedusers) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        } else {
-            res.json(updatedusers);
-        }
+    { new: true }) // This line makes sure that the updated document is returned
+    .then((updatedUsers) => {
+       res.json(updatedUsers);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
     });
 });
 
@@ -170,15 +173,14 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
     Users.findOneAndUpdate({ Username: req.params.Username }, 
     {  $pull: { FavouriteMovies: req.params.MovieID }
     },
-    { new: true }, // This line makes sure that the updated document is returned
-    (err, updatedusers) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error: ' + err);
-        } else {
-            res.json(updatedusers);
-        }
-    });
+    { new: true }) // This line makes sure that the updated document is returned
+    .then((updatedUsers) => {
+      res.json(updatedUsers);
+   })
+   .catch((err) => {
+     console.error(err);
+     res.status(500).send('Error: ' + err);
+   });
 });
 
 //GET FAVOURITEMOVIES
