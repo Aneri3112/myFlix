@@ -1,46 +1,35 @@
 const jwtSecret = 'your_jwt_secret';
+
 const jwt = require('jsonwebtoken'),
-    passport = require('passport');
+  passport = require('passport');
 
-require('./passport');
+require('./passport'); //The local passport file
 
-/**
- * creates JWT (expiring in 7 days, using HS256 algorithm to encode)
- * @param {object} user 
- * @returns user object, jwt, and additional information on token
- */
 let generateJWTToken = (user) => {
-    return jwt.sign(user, jwtSecret, {
-        subject: user.Username,
-        expiresIn: '7m',
-        algorithm: 'HS256'
-    });
+  return jwt.sign(user, jwtSecret, {
+    subject: user.Username, //Username being encoded in the JWT
+    expiresIn: '7m', //Expiration of the token
+    algorithm: 'HS256' //Encoder for JWT values
+  });
 }
 
-/* POST login. */
-/**
- * handles user login, generating a jwt upon login
- * @function generateJWTToken
- * @param {*} router 
- * @returns user object with jwt
- * @requires passport
- */
+/* POST LOGIN */
 module.exports = (router) => {
-    router.post('/login', (req, res) => {
-        passport.authenticate('local', { session: false }, (error, user, info) => {
-            if (error || !user) {
-                return res.status(400).json({
-                    message: 'Something is wrong',
-                    user: user
-                });
-            }
-            req.login(user, { session: false }, (error) => {
-                if (error) {
-                    res.send(error);
-                }
-                let token = generateJWTToken(user.toJSON());
-                return res.json({ user, token });
-            });
-        })(req, res);
-    });
+  router.post('/login', (req, res) => {
+    passport.authenticate('local', { session: false }, (error, user, info) => {
+      if (error || !user) {
+        return res.status(400).json({
+          message: 'Something is wrong',
+          user: user
+        });
+      }
+      req.login(user, { session: false }, (error) => {
+        if (error) {
+          res.send(error);
+        }
+        let token = generateJWTToken(user.toJSON());
+          return res.json({ user, token });
+        });
+    })(req, res);
+  });
 }
